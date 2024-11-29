@@ -8,11 +8,13 @@ import { createBrowserRouter, createRoutesFromElements, Route, RouterProvider } 
 import Login from './components/Login';
 import Products from './components/Products';
 import ProtectedRoutes from './components/ProtectedRoutes';
+import SignUp from './components/SignUp';
 
 const browserRouter = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<App/>}>
       <Route index element = {<Login/>}/>
+      <Route path="/register" element = {<SignUp/>}/>
       <Route path="/products" element = {
         <ProtectedRoutes chlidren={<Products/>}/>
       }
@@ -25,9 +27,9 @@ const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
 root.render(
-  <React.StrictMode>
+ 
     <RouterProvider router = {browserRouter}/>
-  </React.StrictMode>
+ 
 );
 
 // If you want to start measuring performance in your app, pass a function

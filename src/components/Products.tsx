@@ -2,8 +2,11 @@ import React, { useState } from 'react'
 import products from '../products.json'
 import { Col, Container, ListGroup, Pagination, Row, Stack } from 'react-bootstrap'
 import ProductCard from './ProductCard'
+import { useProducts } from '../hooks/useProducts'
 
 const Products = () => {
+  const { data, error, loading } = useProducts()
+
     const [curretPage, setCurrentpage] = useState<number>(1)
     const itemsPerPage = 5
 
