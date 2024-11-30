@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useState,  useCallback, useEffect } from "react";
+import { PRODUCTS_URL } from "../config/config";
 
 type ProductResult = {
   data: any | null;
@@ -21,14 +22,12 @@ export const useProducts = (): ProductResult => {
     setError(null);
 
     try {
-    const response = await axios.post<ApiResponse>(
-        "http://localhost:5001/api/products"
+    const response = await axios.get<ApiResponse>(
+        PRODUCTS_URL
       );
       console.log('response', response);
-      // Handle success response
       setData(response.data);
-      setError(""); // Clear previous errors
-      //setData(result);
+      setError("");
     } catch (err: unknown) {
       setError((err as Error).message);
     } finally {
@@ -36,7 +35,7 @@ export const useProducts = (): ProductResult => {
     }
   }, []);
 
-  useEffect (()=>{fetchData()},[])
+  useEffect (()=>{fetchData()},[fetchData])
 
   return { data, error, loading };
 };

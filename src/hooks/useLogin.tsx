@@ -1,5 +1,7 @@
 import axios from "axios";
-import { useState, useEffect, useCallback } from "react";
+import { useState, useCallback } from "react";
+import { setToken } from "../service/StorageService";
+import { LOGIN_URL } from "../config/config";
 
 type LoginResult = {
   data: any | null;
@@ -22,16 +24,17 @@ export const useLogin = (): LoginResult => {
     setError(null);
 
     try {
-    console.log('options', {email, password});
     const response = await axios.post<ApiResponse>(
-        "http://localhost:5001/api/login", // Replace with your API URL
+        LOGIN_URL,
         {email, password}
       );
       console.log('response', response);
-      // Handle success response
+      if(response && response.data)
+      {
       setData(response.data.token);
-      setError(""); // Clear previous errors
-      //setData(result);
+      setToken(response.data.token)
+      }
+      setError("");
     } catch (err: unknown) {
       setError((err as Error).message);
     } finally {

@@ -1,11 +1,14 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import products from '../products.json'
-import { Col, Container, ListGroup, Pagination, Row, Stack } from 'react-bootstrap'
+import {  Container,  Pagination,  Stack } from 'react-bootstrap'
 import ProductCard from './ProductCard'
 import { useProducts } from '../hooks/useProducts'
+import { getToken } from "../service/StorageService";
+import useNavigateToPages from '../hooks/useNavigateToPages'
 
 const Products = () => {
-  const { data, error, loading } = useProducts()
+    const {naviagteToLogin} = useNavigateToPages()
+    const { data, error, loading } = useProducts()
 
     const [curretPage, setCurrentpage] = useState<number>(1)
     const itemsPerPage = 5
@@ -15,6 +18,18 @@ const Products = () => {
     const currentProductSet = products.slice(firstItemIndex,lastItemIndex)
 
     const handleCurrentPage = (pageNumber: number)=> setCurrentpage(pageNumber)
+
+    useEffect(()=>{
+      const token = getToken();
+      let isMounted = true;
+      if(token && token.length === 0 && isMounted){
+        console.log('products effect')
+        naviagteToLogin()
+      }
+      return () => {
+        isMounted = false
+      }
+    }, []);
 
     const totalPages = Math.ceil(products.length/itemsPerPage)
     const paginationItems = []

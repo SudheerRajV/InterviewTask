@@ -1,18 +1,20 @@
 import {FC} from 'react';
-import { Button, Image } from 'react-bootstrap';
+import { Button } from 'react-bootstrap';
 import Container from 'react-bootstrap/Container';
 import Navbar from 'react-bootstrap/Navbar';
 import logo  from "../logo.svg";
 import { useAppContext } from '../hooks/AppContext';
-import { useNavigate } from 'react-router-dom';
+import { removeToken } from '../service/StorageService';
+import useNavigateToPages from '../hooks/useNavigateToPages';
 
 
 const NavBar: FC = () => {
     const {isLoggedIn, toogleLogout} = useAppContext()
-    const navigate = useNavigate()
+    const {naviagteToLogin} = useNavigateToPages()
     const handleLogout = () =>{
+        removeToken()
         toogleLogout()
-        navigate('/')
+        naviagteToLogin()
     }
   return (
     <>

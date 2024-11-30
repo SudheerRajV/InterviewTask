@@ -6,10 +6,8 @@ interface AppContextType {
     toogleLogout: () => void;
 }
 
-// Create the context
 const AppContext = createContext<AppContextType | undefined>(undefined);
 
-// Create a provider component
 export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [isLoggedIn, setLoggedIn] = useState<boolean>(false);
 
@@ -22,7 +20,6 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   );
 };
 
-// Custom hook to use the AppContext
 export const useAppContext = (): AppContextType => {
   const context = useContext(AppContext);
   if (!context) {

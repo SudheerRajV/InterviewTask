@@ -1,11 +1,12 @@
 import axios from "axios";
-import { useState, useEffect, useCallback } from "react";
+import { useState,  useCallback } from "react";
+import { REGISTER_URL } from "../config/config";
 
 type SignUpResult = {
   data: any | null;
   error: string | null;
   loading: boolean;
-  fetchData: (email:string, password:string,firstnName:string, lastName:string) => Promise<void>;
+  fetchData: (email:string, password:string,firstName:string, lastName:string) => Promise<void>;
 };
 
 interface ApiResponse {
@@ -17,20 +18,17 @@ export const useSignUp = (): SignUpResult => {
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
 
-  const fetchData = useCallback(async (email: string, password:string, firstnName:string, lastName:string) => {
+  const fetchData = useCallback(async (email: string, password:string, firstName:string, lastName:string) => {
     setLoading(true);
     setError(null);
 
     try {
     const response = await axios.post<ApiResponse>(
-        "http://localhost:5001/api/register", // Replace with your API URL
-        {email, password, firstnName, lastName}
+        REGISTER_URL,
+        {email, password, firstName, lastName}
       );
-      //console.log('response', response);
-      // Handle success response
       setData(response.data.message);
-      setError(""); // Clear previous errors
-      //setData(result);
+      setError("");
     } catch (err: unknown) {
       setError((err as Error).message);
     } finally {

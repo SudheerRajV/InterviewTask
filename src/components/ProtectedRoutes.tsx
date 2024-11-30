@@ -1,16 +1,16 @@
 import React, {FC, useEffect} from 'react'
 import { useAppContext } from '../hooks/AppContext';
-import { useNavigate } from 'react-router-dom';
+import useNavigateToPages from "../hooks/useNavigateToPages";
+import { getToken } from '../service/StorageService';
 
 const ProtectedRoutes: FC<{chlidren : React.ReactNode}> = ({chlidren}) => {
-
-    const {isLoggedIn} = useAppContext()
-    const navigate = useNavigate()
-    console.log('isLoggedIn', isLoggedIn)
+    const token = getToken()
+    //const {isLoggedIn} = useAppContext()
+    const {naviagteToLogin} = useNavigateToPages()
     useEffect(()=>{
-        if(!isLoggedIn)
-            navigate('/')
-    },[isLoggedIn, navigate])
+        if(token && token.length === 0)
+          naviagteToLogin()
+    },[])
 
   return (
     <>{chlidren}</>

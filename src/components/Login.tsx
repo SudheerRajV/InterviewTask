@@ -1,17 +1,13 @@
 import { FC, useState, ChangeEvent, FormEvent } from "react";
 import { Card, Button, Form, Container, Spinner } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { useNavigate } from "react-router-dom";
 import { useAppContext } from "../hooks/AppContext";
 import { useLogin } from "../hooks/useLogin";
-
-type LoginResponse = {
-  token: string;
-};
+import useNavigateToPages from "../hooks/useNavigateToPages";
 
 const Login: FC = () => {
-    const navigate = useNavigate()
-    const {isLoggedIn, toogleLogout} = useAppContext()
+    const {naviagteToRegister, naviagteToProducts} = useNavigateToPages()
+    const { toogleLogout} = useAppContext()
     const [email, setEmail] = useState<string>("");
     const [isEmailError, setEmailError] = useState<boolean>(false);
     const [password, setPassword] = useState<string>("");
@@ -30,7 +26,7 @@ const Login: FC = () => {
     };
 
     const handleRegistar = (): void => {
-      navigate('/register')
+      naviagteToRegister()
     };
 
     const validate = () => {
@@ -54,7 +50,7 @@ const Login: FC = () => {
         fetchData(email, password)
         if(data && !loading){
         toogleLogout()
-        navigate('/products')
+        naviagteToProducts()
         }else if(error){
           console.log('error', error)
         }

@@ -1,17 +1,11 @@
 import { FC, useState, ChangeEvent, FormEvent } from "react";
 import { Card, Button, Form, Container, Spinner } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { useNavigate } from "react-router-dom";
-import { useLogin } from "../hooks/useLogin";
 import { useSignUp } from "../hooks/useSignUp";
-import Notify from "./Toast";
-
-type SignUpResponse = {
-  message: string;
-};
+import useNavigateToPages from "../hooks/useNavigateToPages";
 
 const SignUp: FC = () => {
-    const navigate = useNavigate()
+    const {naviagteToLogin} = useNavigateToPages()
     const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
     const [email, setEmail] = useState<string>("");
     const [isEmailError, setEmailError] = useState<boolean>(false);
@@ -75,7 +69,7 @@ const SignUp: FC = () => {
     };
 
     const handleLogin = (): void => {
-        navigate('/')
+      naviagteToLogin()
       };
 
     return (

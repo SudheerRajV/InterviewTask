@@ -13,9 +13,9 @@ import SignUp from './components/SignUp';
 const browserRouter = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<App/>}>
-      <Route index element = {<Login/>}/>
+      <Route path="/login" element = {<Login/>}/>
       <Route path="/register" element = {<SignUp/>}/>
-      <Route path="/products" element = {
+      <Route index element = {
         <ProtectedRoutes chlidren={<Products/>}/>
       }
       />
